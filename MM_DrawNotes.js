@@ -1,4 +1,4 @@
-Module.register("drawboard",{
+Module.register("MM-DrawNotes",{
 
 	// Default module config.
 	defaults: {
@@ -9,7 +9,7 @@ Module.register("drawboard",{
 	},
 	
 	getStyles: function() {
-		return["drawboard.css"];
+		return["MM_DrawNotes.css"];
 	},
 	
 	getDom: function() {
@@ -41,7 +41,7 @@ Module.register("drawboard",{
 		var erase = document.createElement("div");
 		erase.className = "fab_center";
 		var erase_img = document.createElement("img");
-		erase_img.setAttribute("src", "modules/drawboard/img/eraser.png");
+		erase_img.setAttribute("src", "modules/MM_DrawNotes/img/eraser.png");
 		erase.appendChild(erase_img);
 		wrapper.appendChild(erase);
 		erase.addEventListener('mousedown', function(event) {
@@ -52,7 +52,7 @@ Module.register("drawboard",{
 		var edit = document.createElement("div");
 		edit.className = "fab";
 		var edit_img = document.createElement("img");
-		edit_img.setAttribute("src", "modules/drawboard/img/pencil.png");
+		edit_img.setAttribute("src", "modules/MM_DrawNotes/img/pencil.png");
 		edit.appendChild(edit_img);
 		wrapper.appendChild(edit);
 		edit.addEventListener('mousedown', function(event) {
@@ -76,7 +76,7 @@ Module.register("drawboard",{
 		var send = document.createElement("div");
 		send.className = "fab_send";
 		var send_img = document.createElement("img");
-		send_img.setAttribute("src", "modules/drawboard/img/email.png");
+		send_img.setAttribute("src", "modules/MM_DrawNotes/img/email.png");
 		send.appendChild(send_img);
 		wrapper.appendChild(send);
 		send.addEventListener('mousedown', function(event) {
