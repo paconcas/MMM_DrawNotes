@@ -1,4 +1,4 @@
-Module.register("MM-DrawNotes",{
+Module.register("MM_DrawNotes",{
 
 	// Default module config.
 	defaults: {
