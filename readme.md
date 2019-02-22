@@ -1,6 +1,6 @@
 # MM_DrawNotes
 
-![ScreenShot](/snapshot.png.png)
+![ScreenShot](/snapshot.png)
 
 ## Installation
 Navigate into your MagicMirror's `modules` folder:
