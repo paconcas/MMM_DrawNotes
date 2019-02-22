@@ -2,7 +2,9 @@ Module.register("MM_DrawNotes",{
 
 	// Default module config.
 	defaults: {
-		postit: "Notas"
+		postit: "Notas",
+		width: "300",
+		height: "300"
 	},
 	start: function () {
 		this.sendSocketNotification("start", "dummy payload");
@@ -18,8 +20,8 @@ Module.register("MM_DrawNotes",{
 		wrapper,
 		context,
 		background,
-		canvasWidth = 275,
-		canvasHeight = 500,
+		canvasWidth = this.config.width,
+		canvasHeight = this.config.height,
 		clickX = [],
 		clickY = [],
 		clickDrag = [],
@@ -33,10 +35,10 @@ Module.register("MM_DrawNotes",{
 		
 		wrapper = document.createElement("div");
 		wrapper.className = "postit";
-		
-		var t = document.createTextNode(this.config.postit);
-		t.className = "title";
-		wrapper.appendChild(t);
+		wrapper.innerHTML = this.config.postit;
+		wrapper.setAttribute("width", this.config.width);    
+		wrapper.setAttribute("min-height", this.config.height);
+		wrapper.setAttribute("max-height", this.config.height);
 		
 		var erase = document.createElement("div");
 		erase.className = "fab_center";
@@ -85,6 +87,7 @@ Module.register("MM_DrawNotes",{
 		});
 			
 		canvas = document.createElement('canvas');
+		canvas.className = "canvas_style";
 		canvas.setAttribute('width', canvasWidth);
 		canvas.setAttribute('height', canvasHeight);
 		canvas.setAttribute('id', 'canvas');
