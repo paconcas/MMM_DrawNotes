@@ -1,0 +1,23 @@
+{
+  "name": "MMM-DrawNotes",
+  "version": "1.0.0",
+  "description": "Drawing notes module for MagicMirror",
+  "main": "MMM-HASS.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paconcas/MM_DrawNotes.git"
+  },
+  "keywords": [
+    "magic",
+    "mirror",
+    "module",
+    "notes",
+	"drawing"
+  ],
+  "author": "Pablo Conde",
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/paconcas/MM_DrawNotes#readme",
+  "dependencies": {
+    "nodemailer": "latest",
+    }
+}
