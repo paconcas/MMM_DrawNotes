@@ -113,9 +113,6 @@ Module.register("MM_DrawNotes",{
 		  clearCanvas();
 					
 		  for(var i=0; i < clickX.length; i++) {		
-			
-			lineWidth = clickSize[i];
-		 	  
 			context.beginPath();
 			if(clickDrag[i] && i){
 			  context.moveTo(clickX[i-1], clickY[i-1]);
@@ -123,7 +120,7 @@ Module.register("MM_DrawNotes",{
 				context.moveTo(clickX[i]-1, clickY[i]);
 			}
 				context.lineJoin = "round";
-				context.lineWidth = lineWidth;
+				context.lineWidth = clickSize[i];
      			context.strokeStyle = clickColor[i];
 				context.lineTo(clickX[i], clickY[i]);
 				context.closePath();
@@ -174,6 +171,7 @@ Module.register("MM_DrawNotes",{
 			clearCanvas();
 			clickX = [];
 			clickY = [];
+			clickColor = [];
 			clickDrag = [];
 			clickSize = [];
 		}
