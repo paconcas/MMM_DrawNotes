@@ -18,6 +18,6 @@
   "license": "GPL-3.0",
   "homepage": "https://github.com/paconcas/MM_DrawNotes#readme",
   "dependencies": {
-    "nodemailer": "latest",
+    "nodemailer": "latest"
     }
 }

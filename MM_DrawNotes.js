@@ -1,15 +1,31 @@
-Module.register("drawboard",{
-
+Module.register("MM_DrawNotes",{
 	// Default module config.
 	defaults: {
-		postit: "Notas"
+		postit: "Notas",
+		width: "300",
+		height: "300",
+		email_host: "your.host.com",
+		email_port: 465,
+		email_service: "your.service",
+		email_user: "your.account@mail.com",
+		email_pwd: "mail_password"
 	},
 	start: function () {
+		
+		var mail = {
+			host: this.config.email_host,
+			port: this.config.port,
+			service: this.config.service,
+			username: this.config.email_user,
+			pwd: this.config.email_pwd
+		};
+		
 		this.sendSocketNotification("start", "dummy payload");
+		this.sendSocketNotification("mail", mail);
 	},
 	
 	getStyles: function() {
-		return["drawboard.css"];
+		return["MM_DrawNotes.css"];
 	},
 	
 	getDom: function() {
@@ -18,41 +34,49 @@ Module.register("drawboard",{
 		wrapper,
 		context,
 		background,
-		canvasWidth = 275,
-		canvasHeight = 500,
+		canvasWidth = this.config.width,
+		canvasHeight = this.config.height,
 		clickX = [],
 		clickY = [],
 		clickDrag = [],
 		clickSize = [],
 		clickColor = [],
-		curColor = 'black';
-		lineWidth = 1,
 		curSize = 1,
 		paint = false,
-		bgsource =  this.data.path + "img/blackboard.jpg";
+		black = 'black',
+		red = '#C34D5B',
+		green = '#0A9963',
+		blue = '#4B66A9'
+		eraseColor = '#ffff88',
+		curColor = 'black';
+		
 		
 		wrapper = document.createElement("div");
 		wrapper.className = "postit";
-		
-		var t = document.createTextNode(this.config.postit);
-		t.className = "title";
-		wrapper.appendChild(t);
+		wrapper.innerHTML = this.config.postit;
+		wrapper.setAttribute("width", this.config.width);    
+		wrapper.setAttribute("min-height", this.config.height);
+		wrapper.setAttribute("max-height", this.config.height);
+		wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/pencil_black.png), auto');
+
 		
 		var erase = document.createElement("div");
 		erase.className = "fab_center";
 		var erase_img = document.createElement("img");
-		erase_img.setAttribute("src", "modules/drawboard/img/eraser.png");
+		erase_img.setAttribute("src", "modules/MM_DrawNotes/img/eraser.png");
 		erase.appendChild(erase_img);
 		wrapper.appendChild(erase);
 		erase.addEventListener('mousedown', function(event) {
 			 curSize = 8;
-			 curColor = '#ffff88';
+			 curColor = eraseColor;
+	 		 wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/eraser_cursor.png), auto');
+
 		});
 				
 		var edit = document.createElement("div");
 		edit.className = "fab";
 		var edit_img = document.createElement("img");
-		edit_img.setAttribute("src", "modules/drawboard/img/pencil.png");
+		edit_img.setAttribute("src", "modules/MM_DrawNotes/img/pencil.png");
 		edit.appendChild(edit_img);
 		wrapper.appendChild(edit);
 		edit.addEventListener('mousedown', function(event) {
@@ -69,22 +93,52 @@ Module.register("drawboard",{
 				case 8:
 					curSize = 1;
 					break;
-			};
-			curColor = 'black';
+			}
+			if ( curColor == eraseColor ){
+				curColor = black;
+			}
+			wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/pencil_black.png), auto');
 		});
 		
 		var send = document.createElement("div");
 		send.className = "fab_send";
 		var send_img = document.createElement("img");
-		send_img.setAttribute("src", "modules/drawboard/img/email.png");
+		send_img.setAttribute("src", "modules/MM_DrawNotes/img/email.png");
 		send.appendChild(send_img);
 		wrapper.appendChild(send);
 		send.addEventListener('mousedown', function(event) {
 			 var dataURL = canvas.toDataURL('image/png');
 			self.sendSocketNotification("canvas", dataURL);
 		});
+		
+		
+		var color = document.createElement("div");
+		color.className = "fab_color";
+		wrapper.appendChild(color);
+		color.addEventListener('mousedown', function(event) {
+			switch(curColor) {
+				case black:
+					curColor = blue;
+					wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/pencil_blue.png), auto');
+					break;
+				 case blue:
+					curColor = red;
+					wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/pencil_red.png), auto');
+					break;			
+				 case red:
+					curColor = green;
+					wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/pencil_green.png), auto');
+					break;
+				 case green:
+				 case eraseColor:
+					curColor = black;
+					wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/pencil_black.png), auto');
+					break;
+			}
+		});
 			
 		canvas = document.createElement('canvas');
+		canvas.className = "canvas_style";
 		canvas.setAttribute('width', canvasWidth);
 		canvas.setAttribute('height', canvasHeight);
 		canvas.setAttribute('id', 'canvas');
@@ -110,9 +164,6 @@ Module.register("drawboard",{
 		  clearCanvas();
 					
 		  for(var i=0; i < clickX.length; i++) {		
-			
-			lineWidth = clickSize[i];
-		 	  
 			context.beginPath();
 			if(clickDrag[i] && i){
 			  context.moveTo(clickX[i-1], clickY[i-1]);
@@ -120,7 +171,7 @@ Module.register("drawboard",{
 				context.moveTo(clickX[i]-1, clickY[i]);
 			}
 				context.lineJoin = "round";
-				context.lineWidth = lineWidth;
+				context.lineWidth = clickSize[i];
      			context.strokeStyle = clickColor[i];
 				context.lineTo(clickX[i], clickY[i]);
 				context.closePath();
@@ -171,6 +222,7 @@ Module.register("drawboard",{
 			clearCanvas();
 			clickX = [];
 			clickY = [];
+			clickColor = [];
 			clickDrag = [];
 			clickSize = [];
 		}
