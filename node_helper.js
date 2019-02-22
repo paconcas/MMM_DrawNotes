@@ -24,6 +24,7 @@ module.exports = NodeHelper.create({
 		
 		if ( notification == 'mail' ){
 			 mail.username = payload.username;
+			 mailOptions.from = mail.username;
 			 mail.pwd = payload.pwd;
 			 mail.host = payload.host;
 			 mail.service = payload.service;
