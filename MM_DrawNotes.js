@@ -4,10 +4,25 @@ Module.register("MM_DrawNotes",{
 	defaults: {
 		postit: "Notas",
 		width: "300",
-		height: "300"
+		height: "300",
+		email_host: "your.host.com",
+		email_port: 465,
+		email_service: "your.service",
+		email_user: "your.account@mail.com",
+		email_pwd: "mail_password"
 	},
 	start: function () {
+		
+		var mail = {
+			host: this.config.email_host,
+			port: this.config.port,
+			service: this.config.service,
+			username: this.config.email_user,
+			pwd: this.config.email_pwd
+		};
+		
 		this.sendSocketNotification("start", "dummy payload");
+		this.sendSocketNotification("mail", mail);
 	},
 	
 	getStyles: function() {
@@ -28,7 +43,6 @@ Module.register("MM_DrawNotes",{
 		clickSize = [],
 		clickColor = [],
 		curColor = 'black';
-		lineWidth = 1,
 		curSize = 1,
 		paint = false,
 		bgsource =  this.data.path + "img/blackboard.jpg";
