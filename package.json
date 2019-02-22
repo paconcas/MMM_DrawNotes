@@ -1,8 +1,8 @@
 {
-  "name": "MMM-DrawNotes",
+  "name": "MMM_DrawNotes",
   "version": "1.0.0",
   "description": "Drawing notes module for MagicMirror",
-  "main": "MMM-HASS.js",
+  "main": "MM_DrawNotes.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/paconcas/MM_DrawNotes.git"
