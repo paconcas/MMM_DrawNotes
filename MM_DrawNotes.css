@@ -10,7 +10,6 @@
   font-size:32px;      
   border-bottom-right-radius: 60px 5px;
   display:inline-block;
-  cursor: pointer;
   background: #ffff88; /* Old browsers */
   background: -moz-linear-gradient(-45deg, #ffff88 81%, #ffff88 82%, #ffff88 82%, #ffffc6 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, right bottom, color-stop(81%,#ffff88), color-stop(82%,#ffff88), color-stop(82%,#ffff88), color-stop(100%,#ffffc6)); /* Chrome,Safari4+ */
@@ -114,6 +113,34 @@
 }
 
 .fab_send:hover {
+   box-shadow: 0 6px 14px 0 #666;
+   transform: scale(1.05);
+}
+
+.fab_color {
+   border-radius: 50%;
+   box-shadow: 0 6px 10px 0 #666;
+  
+   border-style: solid;
+   border-bottom-color: #C34D5B;
+   border-left-color: #0A9963;
+   border-right-color: #4B66A9;
+   border-top-color: black;
+   border-width: 20px;
+  
+   font-family: FontAwesome;
+   font-size: 30px;
+   line-height: 40px;
+   color: white;
+   text-align: center;
+   
+   position: absolute;
+   left: 160px;
+   bottom: 10px; 
+   transition: all 0.1s ease-in-out;
+}
+
+.fab_color:hover {
    box-shadow: 0 6px 14px 0 #666;
    transform: scale(1.05);
 }
