@@ -1,5 +1,5 @@
 {
-  "name": "MMMM_DrawNotes",
+  "name": "MMM_DrawNotes",
   "version": "1.0.0",
   "description": "Drawing notes module for MagicMirror",
   "main": "MMM_DrawNotes.js",
