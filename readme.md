@@ -1,4 +1,4 @@
-# MM_DrawNotes
+# MMM_DrawNotes
 
 ![ScreenShot](/snapshot.png)
 
@@ -10,10 +10,10 @@ cd ~/MagicMirror/modules
 
 Clone this repository:
 ```
-git clone https://github.com/paconcas/MM_DrawNotes
+git clone https://github.com/paconcas/MMM_DrawNotes
 ```
 
-Navigate to the new `MM_DrawNotes` folder and install the node dependencies.
+Navigate to the new `MMM_DrawNotes` folder and install the node dependencies.
 ```
 npm install
 ```
@@ -24,7 +24,7 @@ Configure the module in your `config.js` file.
 To use this module, add it to the modules array in the `config/config.js` file:
 ```javascript
 {
-	module: "MM_DrawNotes",
+	module: "MMM_DrawNotes",
 	position: "top_right",
 	config: {
 		postit: "List",

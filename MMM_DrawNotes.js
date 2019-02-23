@@ -1,4 +1,4 @@
-Module.register("MM_DrawNotes",{
+Module.register("MMM_DrawNotes",{
 	// Default module config.
 	defaults: {
 		postit: "Notas",
@@ -11,7 +11,7 @@ Module.register("MM_DrawNotes",{
 		email_pwd: "mail_password"
 	},
 	start: function () {
-		
+
 		var mail = {
 			host: this.config.email_host,
 			port: this.config.port,
@@ -19,15 +19,15 @@ Module.register("MM_DrawNotes",{
 			username: this.config.email_user,
 			pwd: this.config.email_pwd
 		};
-		
+
 		this.sendSocketNotification("start", "dummy payload");
 		this.sendSocketNotification("mail", mail);
 	},
-	
+
 	getStyles: function() {
-		return["MM_DrawNotes.css"];
+		return["MMM_DrawNotes.css"];
 	},
-	
+
 	getDom: function() {
 		var canvas,
 		self = this,
@@ -49,34 +49,34 @@ Module.register("MM_DrawNotes",{
 		blue = '#4B66A9'
 		eraseColor = '#ffff88',
 		curColor = 'black';
-		
-		
+
+
 		wrapper = document.createElement("div");
 		wrapper.className = "postit";
 		wrapper.innerHTML = this.config.postit;
-		wrapper.setAttribute("width", this.config.width);    
+		wrapper.setAttribute("width", this.config.width);
 		wrapper.setAttribute("min-height", this.config.height);
 		wrapper.setAttribute("max-height", this.config.height);
-		wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/pencil_black.png), auto');
+		wrapper.style.setProperty('cursor', 'url(modules/MMM_DrawNotes/img/pencil_black.png), auto');
 
-		
+
 		var erase = document.createElement("div");
 		erase.className = "fab_center";
 		var erase_img = document.createElement("img");
-		erase_img.setAttribute("src", "modules/MM_DrawNotes/img/eraser.png");
+		erase_img.setAttribute("src", "modules/MMM_DrawNotes/img/eraser.png");
 		erase.appendChild(erase_img);
 		wrapper.appendChild(erase);
 		erase.addEventListener('mousedown', function(event) {
 			 curSize = 8;
 			 curColor = eraseColor;
-	 		 wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/eraser_cursor.png), auto');
+	 		 wrapper.style.setProperty('cursor', 'url(modules/MMM_DrawNotes/img/eraser_cursor.png), auto');
 
 		});
-				
+
 		var edit = document.createElement("div");
 		edit.className = "fab";
 		var edit_img = document.createElement("img");
-		edit_img.setAttribute("src", "modules/MM_DrawNotes/img/pencil.png");
+		edit_img.setAttribute("src", "modules/MMM_DrawNotes/img/pencil.png");
 		edit.appendChild(edit_img);
 		wrapper.appendChild(edit);
 		edit.addEventListener('mousedown', function(event) {
@@ -97,21 +97,21 @@ Module.register("MM_DrawNotes",{
 			if ( curColor == eraseColor ){
 				curColor = black;
 			}
-			wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/pencil_black.png), auto');
+			wrapper.style.setProperty('cursor', 'url(modules/MMM_DrawNotes/img/pencil_black.png), auto');
 		});
-		
+
 		var send = document.createElement("div");
 		send.className = "fab_send";
 		var send_img = document.createElement("img");
-		send_img.setAttribute("src", "modules/MM_DrawNotes/img/email.png");
+		send_img.setAttribute("src", "modules/MMM_DrawNotes/img/email.png");
 		send.appendChild(send_img);
 		wrapper.appendChild(send);
 		send.addEventListener('mousedown', function(event) {
 			 var dataURL = canvas.toDataURL('image/png');
 			self.sendSocketNotification("canvas", dataURL);
 		});
-		
-		
+
+
 		var color = document.createElement("div");
 		color.className = "fab_color";
 		wrapper.appendChild(color);
@@ -119,39 +119,39 @@ Module.register("MM_DrawNotes",{
 			switch(curColor) {
 				case black:
 					curColor = blue;
-					wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/pencil_blue.png), auto');
+					wrapper.style.setProperty('cursor', 'url(modules/MMM_DrawNotes/img/pencil_blue.png), auto');
 					break;
 				 case blue:
 					curColor = red;
-					wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/pencil_red.png), auto');
-					break;			
+					wrapper.style.setProperty('cursor', 'url(modules/MMM_DrawNotes/img/pencil_red.png), auto');
+					break;
 				 case red:
 					curColor = green;
-					wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/pencil_green.png), auto');
+					wrapper.style.setProperty('cursor', 'url(modules/MMM_DrawNotes/img/pencil_green.png), auto');
 					break;
 				 case green:
 				 case eraseColor:
 					curColor = black;
-					wrapper.style.setProperty('cursor', 'url(modules/MM_DrawNotes/img/pencil_black.png), auto');
+					wrapper.style.setProperty('cursor', 'url(modules/MMM_DrawNotes/img/pencil_black.png), auto');
 					break;
 			}
 		});
-			
+
 		canvas = document.createElement('canvas');
 		canvas.className = "canvas_style";
 		canvas.setAttribute('width', canvasWidth);
 		canvas.setAttribute('height', canvasHeight);
 		canvas.setAttribute('id', 'canvas');
 		context = canvas.getContext("2d"); // Grab the 2d canvas context
-		
+
 	    wrapper.appendChild(canvas);
-		
+
 		var clearCanvas = function () {
 			context.clearRect(0, 0, canvasWidth, canvasHeight);
 			context.fillStyle = '#ffff88';
 			context.fillRect(0, 0, canvas.width, canvas.height);
 		}
-		
+
 		var addClick = function addClick(x, y, dragging){
 		  clickX.push(x);
 		  clickY.push(y);
@@ -159,11 +159,11 @@ Module.register("MM_DrawNotes",{
 		  clickSize.push(curSize);
 		  clickColor.push(curColor);
 		}
-		
+
 		var redraw = function redraw(){
 		  clearCanvas();
-					
-		  for(var i=0; i < clickX.length; i++) {		
+
+		  for(var i=0; i < clickX.length; i++) {
 			context.beginPath();
 			if(clickDrag[i] && i){
 			  context.moveTo(clickX[i-1], clickY[i-1]);
@@ -178,8 +178,8 @@ Module.register("MM_DrawNotes",{
 				context.stroke();
 			}
 		}
-				
-		
+
+
 		canvas.addEventListener('mousedown', function(event) {
 			if (event.button != 0){
 				clearAll();
@@ -191,7 +191,7 @@ Module.register("MM_DrawNotes",{
 			addClick(x, y);
 			redraw();
 			}
-			
+
 		}, false);
 
 		canvas.addEventListener('mousemove', function(event) {
@@ -204,11 +204,11 @@ Module.register("MM_DrawNotes",{
 			}
 
 		}, false);
-		
+
 		canvas.addEventListener('mouseup', function(event) {
 			paint = false;
 		}, false);
-		
+
 		canvas.addEventListener('mouseleave', function(event) {
 			paint = false;
 		}, false);
@@ -217,7 +217,7 @@ Module.register("MM_DrawNotes",{
 			var rect = canvas.getBoundingClientRect();
 			return {x: e.clientX - rect.left, y: e.clientY - rect.top};
 		}
-		
+
 		function clearAll() {
 			clearCanvas();
 			clickX = [];
@@ -226,9 +226,9 @@ Module.register("MM_DrawNotes",{
 			clickDrag = [];
 			clickSize = [];
 		}
-		
+
 		return wrapper;
 	},
-	
-	
+
+
 });
