@@ -5,29 +5,34 @@ var NodeHelper = require("node_helper"),
 		port: '',
 		service: '',
 		username: '',
-		pwd:''
+		pwd:'',
+		to:'',
+		subject:'',
+		text:'',
 	},
 	mailOptions = {
 		from: 'from@mail.com',
 		to: 'to@mail.com',
-		subject: 'Sending Email using Node.js',
-		text: 'That was easy!',
+		subject: '',
+		text: '',
 		attachments: [{
-			filename: 'out.png',
-			path: 'out.png',
+			filename: 'note.png',
+			path: 'note.png',
 		}]
 	};
 
 module.exports = NodeHelper.create({
-	
+
 	socketNotificationReceived: function(notification, payload){
-		
+
 		if ( notification == 'mail' ){
 			 mail.username = payload.username;
 			 mail.pwd = payload.pwd;
 			 mail.host = payload.host;
 			 mail.service = payload.service;
 			 mail.port = payload.port;
+			 mailOptions.from = payload.username;
+			 mailOptions.to = payload.to;
 		} else if(notification == 'canvas'){
 			var base64Data = payload.replace(/^data:image\/png;base64,/, "");
 			require("fs").writeFile("out.png", base64Data, 'base64', function(err) {
@@ -53,8 +58,8 @@ module.exports = NodeHelper.create({
 				});
 			  }
 			});
-			
+
 		}
-			
+
 	}
 });
