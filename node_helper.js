@@ -35,7 +35,7 @@ module.exports = NodeHelper.create({
 			 mailOptions.to = payload.to;
 		} else if(notification == 'canvas'){
 			var base64Data = payload.replace(/^data:image\/png;base64,/, "");
-			require("fs").writeFile("out.png", base64Data, 'base64', function(err) {
+			require("fs").writeFile("note.png", base64Data, 'base64', function(err) {
 			  console.log(err);
 			});
 			var transporter = nodemailer.createTransport({
