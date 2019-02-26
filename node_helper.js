@@ -33,6 +33,8 @@ module.exports = NodeHelper.create({
 			 mail.port = payload.port;
 			 mailOptions.from = payload.username;
 			 mailOptions.to = payload.to;
+			 mailOptions.subject = payload.subject;
+			 mailOptions.text = payload.text;
 		} else if(notification == 'canvas'){
 			var base64Data = payload.replace(/^data:image\/png;base64,/, "");
 			require("fs").writeFile("note.png", base64Data, 'base64', function(err) {
@@ -54,7 +56,7 @@ module.exports = NodeHelper.create({
 				console.log('Email sent: ' + info.response);
 				require("fs").unlink('out.png', (err) => {
 				if (err) throw err;
-				console.log('out.png was deleted');
+				console.log('Note capture was deleted');
 				});
 			  }
 			});
