@@ -1,14 +1,17 @@
 Module.register("MMM_DrawNotes",{
 	// Default module config.
 	defaults: {
-		postit: "Notas",
+		postit: "Notes",
 		width: "300",
 		height: "300",
 		email_host: "your.host.com",
 		email_port: 465,
 		email_service: "your.service",
 		email_user: "your.account@mail.com",
-		email_pwd: "mail_password"
+		email_pwd: "mail_password",
+		to_mail: "to.mail@mail.com",
+		subject:"Shopping list",
+		text:"Attached shopping list from MagicMirror",
 	},
 	start: function () {
 
@@ -17,7 +20,10 @@ Module.register("MMM_DrawNotes",{
 			port: this.config.port,
 			service: this.config.service,
 			username: this.config.email_user,
-			pwd: this.config.email_pwd
+			pwd: this.config.email_pwd,
+			to: this.config.to_mail,
+			subject: this.config.subject,
+			text: this.config.text
 		};
 
 		this.sendSocketNotification("start", "dummy payload");
