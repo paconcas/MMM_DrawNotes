@@ -54,7 +54,7 @@ module.exports = NodeHelper.create({
 				console.log(error);
 			  } else {
 				console.log('Email sent: ' + info.response);
-				require("fs").unlink('out.png', (err) => {
+				require("fs").unlink('note.png', (err) => {
 				if (err) throw err;
 				console.log('Note capture was deleted');
 				});
